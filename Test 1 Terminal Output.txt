@@ -1,0 +1,577 @@
+
+(takeoff-env) Maliks-MacBook-Air:Desktop malik$ cd ~/Desktop/takeoff-nn 2
+(takeoff-env) Maliks-MacBook-Air:takeoff-nn malik$ ls
+CURSOR_CONTEXT.md	data			model.py
+README.md		dataset.py		outputs
+__pycache__		detect_scale_bar.py	train.py
+align_pairs.py		environment.yml
+config.py		evaluate.py
+(takeoff-env) Maliks-MacBook-Air:takeoff-nn malik$ python dataset.py
+Testing color extraction on data/annotated/P05.jpg...
+  [data/annotated/P05.jpg] classes found: ['background', 'aluminum_cladding', 'beams_ornaments_mouldings', 'vinyl_trim', 'downpipes', 'hardie_pvc_trim_orange', 'red', 'mac_coil', 'hardie_pvc_trim_beige', 'hardie_pvc_trim_brown', 'light_pink', 'mac_siding', 'black_element', 'green']
+
+Pixel counts per class:
+  [0] background                          16,339,584 px  (97.1%)
+  [1] aluminum_cladding                       41,832 px  (0.2%)
+  [2] beams_ornaments_mouldings                  250 px  (0.0%)
+  [3] vinyl_trim                               6,259 px  (0.0%)
+  [4] downpipes                                6,287 px  (0.0%)
+  [5] hardie_pvc_trim_orange                      84 px  (0.0%)
+  [6] red                                     14,664 px  (0.1%)
+  [7] mac_coil                                   468 px  (0.0%)
+  [8] hardie_pvc_trim_beige                    2,571 px  (0.0%)
+  [9] hardie_pvc_trim_brown                   42,685 px  (0.3%)
+  [10] light_pink                               8,886 px  (0.1%)
+  [11] mac_siding                                  29 px  (0.0%)
+  [12] black_element                          366,400 px  (2.2%)
+  [13] green                                        1 px  (0.0%)
+[Dataset] 16 images found
+/opt/miniconda3/envs/takeoff-env/lib/python3.11/site-packages/albumentations/core/validation.py:114: UserWarning: ShiftScaleRotate is a special case of Affine transform. Please use Affine transform instead.
+  original_init(self, **validated_kwargs)
+/Users/malik/Desktop/takeoff-nn/dataset.py:86: UserWarning: Argument(s) 'var_limit' are not valid for transform GaussNoise
+  A.GaussNoise(var_limit=(5, 15), p=0.2),
+[DataLoader] Train: 12 | Val: 4
+
+✅ Batch loaded: images torch.Size([2, 3, 512, 512]) | masks torch.Size([2, 512, 512])
+   Classes in batch: ['background', 'beams_ornaments_mouldings', 'vinyl_trim', 'downpipes', 'mac_coil', 'light_pink', 'black_element']
+(takeoff-env) Maliks-MacBook-Air:takeoff-nn malik$ python train.py
+============================================================
+  AI Takeoff — U-Net Segmentation Training
+============================================================
+[Model] U-Net with resnet34 encoder
+[Model] Trainable parameters: 24,438,254
+[Model] Output classes: 14 (background, aluminum_cladding, beams_ornaments_mouldings, vinyl_trim, downpipes, hardie_pvc_trim_orange, red, mac_coil, hardie_pvc_trim_beige, hardie_pvc_trim_brown, light_pink, mac_siding, black_element, green)
+[Model] Running on: CPU
+/opt/miniconda3/envs/takeoff-env/lib/python3.11/site-packages/torch/optim/lr_scheduler.py:28: UserWarning: The verbose parameter is deprecated. Please use get_last_lr() to access the learning rate.
+  warnings.warn("The verbose parameter is deprecated. Please use get_last_lr() "
+[Dataset] 16 images found
+/opt/miniconda3/envs/takeoff-env/lib/python3.11/site-packages/albumentations/core/validation.py:114: UserWarning: ShiftScaleRotate is a special case of Affine transform. Please use Affine transform instead.
+  original_init(self, **validated_kwargs)
+/Users/malik/Desktop/takeoff-nn/dataset.py:86: UserWarning: Argument(s) 'var_limit' are not valid for transform GaussNoise
+  A.GaussNoise(var_limit=(5, 15), p=0.2),
+[DataLoader] Train: 12 | Val: 4
+
+Starting training on CPU for up to 50 epochs
+
+Epoch 1/50
+----------------------------------------
+python   Batch 6/6 | Loss: 1.7215 | IoU: 0.0046
+^R
+       
+  Train → Loss: 1.7363 | IoU: 0.0052
+  Val   → Loss: 1.8470   | IoU: 0.0050
+  Time: 142.2s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 2/50
+----------------------------------------
+  Batch 6/6 | Loss: 1.5720 | IoU: 0.0076
+
+  Train → Loss: 1.6819 | IoU: 0.0072
+  Val   → Loss: 1.8952   | IoU: 0.0064
+  Time: 81.3s
+  No improvement for 1/10 epochs
+
+Epoch 3/50
+----------------------------------------
+  Batch 6/6 | Loss: 1.6685 | IoU: 0.0125
+
+  Train → Loss: 1.6230 | IoU: 0.0099
+  Val   → Loss: 2.7369   | IoU: 0.0090
+  Time: 70.9s
+  No improvement for 2/10 epochs
+
+Epoch 4/50
+----------------------------------------
+  Batch 6/6 | Loss: 1.6068 | IoU: 0.0143
+^[
+  Train → Loss: 1.5484 | IoU: 0.0134
+  Val   → Loss: 2.4874   | IoU: 0.0075
+  Time: 76.8s
+  No improvement for 3/10 epochs
+
+Epoch 5/50
+----------------------------------------
+  Batch 6/6 | Loss: 1.3969 | IoU: 0.0236
+
+  Train → Loss: 1.4854 | IoU: 0.0181
+  Val   → Loss: 1.7690   | IoU: 0.0170
+  Time: 78.9s
+  💾 Checkpoint saved → best_model.pth
+  💾 Checkpoint saved → epoch_005.pth
+
+Epoch 6/50
+----------------------------------------
+  Batch 6/6 | Loss: 1.5225 | IoU: 0.0525
+
+  Train → Loss: 1.4581 | IoU: 0.0378
+  Val   → Loss: 1.6615   | IoU: 0.0340
+  Time: 68.5s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 7/50
+----------------------------------------
+  Batch 6/6 | Loss: 1.4441 | IoU: 0.0609
+
+  Train → Loss: 1.3842 | IoU: 0.0535
+  Val   → Loss: 1.5682   | IoU: 0.0504
+  Time: 69.9s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 8/50
+----------------------------------------
+  Batch 6/6 | Loss: 1.2748 | IoU: 0.0598
+
+  Train → Loss: 1.3552 | IoU: 0.0594
+  Val   → Loss: 1.5139   | IoU: 0.0583
+  Time: 71.8s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 9/50
+----------------------------------------
+  Batch 6/6 | Loss: 1.3297 | IoU: 0.0675
+
+  Train → Loss: 1.3129 | IoU: 0.0645
+  Val   → Loss: 1.4602   | IoU: 0.0628
+  Time: 73.9s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 10/50
+----------------------------------------
+  Batch 6/6 | Loss: 1.1793 | IoU: 0.0649
+
+  Train → Loss: 1.2858 | IoU: 0.0658
+  Val   → Loss: 1.6167   | IoU: 0.0630
+  Time: 71.0s
+  No improvement for 1/10 epochs
+  💾 Checkpoint saved → epoch_010.pth
+
+Epoch 11/50
+----------------------------------------
+  Batch 6/6 | Loss: 1.3133 | IoU: 0.0686
+
+  Train → Loss: 1.2500 | IoU: 0.0667
+  Val   → Loss: 1.4776   | IoU: 0.0647
+  Time: 71.4s
+  No improvement for 2/10 epochs
+
+Epoch 12/50
+----------------------------------------
+  Batch 6/6 | Loss: 1.1407 | IoU: 0.0733
+
+  Train → Loss: 1.2097 | IoU: 0.0677
+  Val   → Loss: 1.3254   | IoU: 0.0717
+  Time: 69.9s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 13/50
+----------------------------------------
+  Batch 6/6 | Loss: 1.0744 | IoU: 0.0731
+
+  Train → Loss: 1.1662 | IoU: 0.0716
+  Val   → Loss: 1.2712   | IoU: 0.0725
+  Time: 69.3s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 14/50
+----------------------------------------
+  Batch 6/6 | Loss: 1.1951 | IoU: 0.0734
+
+  Train → Loss: 1.1325 | IoU: 0.0713
+  Val   → Loss: 1.2335   | IoU: 0.0724
+  Time: 69.8s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 15/50
+----------------------------------------
+  Batch 6/6 | Loss: 1.1755 | IoU: 0.0734
+
+  Train → Loss: 1.0774 | IoU: 0.0725
+  Val   → Loss: 1.2045   | IoU: 0.0755
+  Time: 70.3s
+  💾 Checkpoint saved → best_model.pth
+  💾 Checkpoint saved → epoch_015.pth
+
+Epoch 16/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.9727 | IoU: 0.0785
+
+  Train → Loss: 1.0329 | IoU: 0.0746
+  Val   → Loss: 1.1450   | IoU: 0.0761
+  Time: 73.0s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 17/50
+----------------------------------------
+  Batch 6/6 | Loss: 1.0962 | IoU: 0.0788
+
+  Train → Loss: 1.0209 | IoU: 0.0767
+  Val   → Loss: 1.0948   | IoU: 0.0797
+  Time: 77.3s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 18/50
+----------------------------------------
+  Batch 6/6 | Loss: 1.0883 | IoU: 0.0737
+
+  Train → Loss: 1.0059 | IoU: 0.0775
+  Val   → Loss: 1.0606   | IoU: 0.0740
+  Time: 71.5s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 19/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.9144 | IoU: 0.0800
+
+  Train → Loss: 0.9886 | IoU: 0.0779
+  Val   → Loss: 1.0173   | IoU: 0.0833
+  Time: 70.0s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 20/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.8650 | IoU: 0.0798
+
+  Train → Loss: 0.9664 | IoU: 0.0801
+  Val   → Loss: 1.0085   | IoU: 0.0796
+  Time: 69.8s
+  💾 Checkpoint saved → best_model.pth
+  💾 Checkpoint saved → epoch_020.pth
+
+Epoch 21/50
+----------------------------------------
+  Batch 6/6 | Loss: 1.0156 | IoU: 0.0796
+
+  Train → Loss: 0.9149 | IoU: 0.0801
+  Val   → Loss: 0.9740   | IoU: 0.0832
+  Time: 70.4s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 22/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.8213 | IoU: 0.0796
+
+  Train → Loss: 0.9057 | IoU: 0.0810
+  Val   → Loss: 1.0385   | IoU: 0.0792
+  Time: 68.3s
+  No improvement for 1/10 epochs
+
+Epoch 23/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.8018 | IoU: 0.0792
+
+  Train → Loss: 0.8764 | IoU: 0.0800
+  Val   → Loss: 0.9398   | IoU: 0.0798
+  Time: 68.3s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 24/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.9558 | IoU: 0.0801
+
+  Train → Loss: 0.8806 | IoU: 0.0826
+  Val   → Loss: 0.8990   | IoU: 0.0835
+  Time: 71.8s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 25/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.7517 | IoU: 0.0878
+
+  Train → Loss: 0.8545 | IoU: 0.0826
+  Val   → Loss: 0.9077   | IoU: 0.0834
+  Time: 73.5s
+  No improvement for 1/10 epochs
+  💾 Checkpoint saved → epoch_025.pth
+
+Epoch 26/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.7776 | IoU: 0.0877
+
+  Train → Loss: 0.8293 | IoU: 0.0817
+  Val   → Loss: 0.8724   | IoU: 0.0835
+  Time: 73.5s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 27/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.8778 | IoU: 0.0793
+
+  Train → Loss: 0.8235 | IoU: 0.0828
+  Val   → Loss: 0.8552   | IoU: 0.0835
+  Time: 75.3s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 28/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.8761 | IoU: 0.0810
+
+  Train → Loss: 0.8054 | IoU: 0.0827
+  Val   → Loss: 0.8280   | IoU: 0.0835
+  Time: 70.1s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 29/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.6949 | IoU: 0.0881
+
+  Train → Loss: 0.7629 | IoU: 0.0827
+  Val   → Loss: 0.8447   | IoU: 0.0871
+  Time: 69.8s
+  No improvement for 1/10 epochs
+
+Epoch 30/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.8179 | IoU: 0.0870
+
+  Train → Loss: 0.7417 | IoU: 0.0854
+  Val   → Loss: 0.7912   | IoU: 0.0872
+  Time: 73.0s
+  💾 Checkpoint saved → best_model.pth
+  💾 Checkpoint saved → epoch_030.pth
+
+Epoch 31/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.7995 | IoU: 0.0802
+
+  Train → Loss: 0.7495 | IoU: 0.0830
+  Val   → Loss: 0.7665   | IoU: 0.0872
+  Time: 69.5s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 32/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.7926 | IoU: 0.0868
+
+  Train → Loss: 0.7296 | IoU: 0.0853
+  Val   → Loss: 0.7852   | IoU: 0.0871
+  Time: 66.8s
+  No improvement for 1/10 epochs
+
+Epoch 33/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.6353 | IoU: 0.0869
+
+  Train → Loss: 0.7154 | IoU: 0.0841
+  Val   → Loss: 0.7382   | IoU: 0.0872
+  Time: 68.5s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 34/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.6444 | IoU: 0.0880
+
+  Train → Loss: 0.6703 | IoU: 0.0856
+  Val   → Loss: 0.7325   | IoU: 0.0872
+  Time: 72.9s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 35/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.6144 | IoU: 0.0865
+
+  Train → Loss: 0.6521 | IoU: 0.0886
+  Val   → Loss: 0.7515   | IoU: 0.0870
+  Time: 71.2s
+  No improvement for 1/10 epochs
+  💾 Checkpoint saved → epoch_035.pth
+
+Epoch 36/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.7209 | IoU: 0.0812
+
+  Train → Loss: 0.6791 | IoU: 0.0852
+  Val   → Loss: 0.7835   | IoU: 0.0869
+  Time: 68.0s
+  No improvement for 2/10 epochs
+
+Epoch 37/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.7513 | IoU: 0.0805
+
+  Train → Loss: 0.6734 | IoU: 0.0853
+  Val   → Loss: 0.7094   | IoU: 0.0872
+  Time: 70.8s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 38/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.6216 | IoU: 0.0814
+
+  Train → Loss: 0.6570 | IoU: 0.0829
+  Val   → Loss: 0.6946   | IoU: 0.0871
+  Time: 73.8s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 39/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.5613 | IoU: 0.0870
+
+  Train → Loss: 0.6181 | IoU: 0.0853
+  Val   → Loss: 0.6941   | IoU: 0.0870
+  Time: 72.3s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 40/50
+----------------------------------------
+^R
+  Batch 6/6 | Loss: 0.5500 | IoU: 0.0869
+
+  Train → Loss: 0.6391 | IoU: 0.0857
+  Val   → Loss: 0.6782   | IoU: 0.0870
+  Time: 84.6s
+  💾 Checkpoint saved → best_model.pth
+  💾 Checkpoint saved → epoch_040.pth
+
+Epoch 41/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.5345 | IoU: 0.0873
+
+  Train → Loss: 0.6235 | IoU: 0.0868
+  Val   → Loss: 0.6563   | IoU: 0.0871
+  Time: 74.7s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 42/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.5900 | IoU: 0.0882
+
+  Train → Loss: 0.6154 | IoU: 0.0868
+  Val   → Loss: 0.6463   | IoU: 0.0871
+  Time: 72.5s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 43/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.6857 | IoU: 0.0808
+
+  Train → Loss: 0.5759 | IoU: 0.0853
+  Val   → Loss: 0.6427   | IoU: 0.0870
+  Time: 71.2s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 44/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.6926 | IoU: 0.0798
+
+  Train → Loss: 0.6033 | IoU: 0.0853
+  Val   → Loss: 0.6397   | IoU: 0.0870
+  Time: 70.2s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 45/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.4912 | IoU: 0.0881
+
+  Train → Loss: 0.5763 | IoU: 0.0852
+  Val   → Loss: 0.6275   | IoU: 0.0871
+  Time: 70.2s
+  💾 Checkpoint saved → best_model.pth
+  💾 Checkpoint saved → epoch_045.pth
+
+Epoch 46/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.6545 | IoU: 0.0812
+
+  Train → Loss: 0.5624 | IoU: 0.0880
+  Val   → Loss: 0.6253   | IoU: 0.0870
+  Time: 70.6s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 47/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.5449 | IoU: 0.0883
+
+  Train → Loss: 0.5726 | IoU: 0.0854
+  Val   → Loss: 0.6173   | IoU: 0.0870
+  Time: 68.9s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 48/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.6177 | IoU: 0.0876
+
+  Train → Loss: 0.5458 | IoU: 0.0867
+  Val   → Loss: 0.6058   | IoU: 0.0871
+  Time: 68.1s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 49/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.4645 | IoU: 0.0880
+
+  Train → Loss: 0.5467 | IoU: 0.0853
+  Val   → Loss: 0.5994   | IoU: 0.0871
+  Time: 69.9s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 50/50
+----------------------------------------
+  Batch 6/6 | Loss: 0.4552 | IoU: 0.0970
+
+  Train → Loss: 0.5507 | IoU: 0.0868
+  Val   → Loss: 0.5947   | IoU: 0.0871
+  Time: 72.0s
+  💾 Checkpoint saved → best_model.pth
+  💾 Checkpoint saved → epoch_050.pth
+
+============================================================
+  Training complete!
+  Best validation loss: 0.5947
+  Best model saved at:  /Users/malik/Desktop/takeoff-nn/outputs/checkpoints/best_model.pth
+============================================================
+
+  Training history saved → /Users/malik/Desktop/takeoff-nn/outputs/logs/training_history.npy
+  Run evaluate.py to test the model on your drawings.
+(takeoff-env) Maliks-MacBook-Air:takeoff-nn malik$ python model.py
+[Model] U-Net with resnet34 encoder
+[Model] Trainable parameters: 24,438,254
+[Model] Output classes: 14 (background, aluminum_cladding, beams_ornaments_mouldings, vinyl_trim, downpipes, hardie_pvc_trim_orange, red, mac_coil, hardie_pvc_trim_beige, hardie_pvc_trim_brown, light_pink, mac_siding, black_element, green)
+[Model] Running on: CPU
+
+✅ Forward pass successful!
+   Input shape:  torch.Size([2, 3, 512, 512])
+   Output shape: torch.Size([2, 14, 512, 512])
+   Each pixel gets 14 scores, one per material class.
+(takeoff-env) Maliks-MacBook-Air:takeoff-nn malik$ python evaluate.py 
+Matplotlib is building the font cache; this may take a moment.
+Loading model from /Users/malik/Desktop/takeoff-nn/outputs/checkpoints/best_model.pth...
+[Model] U-Net with resnet34 encoder
+[Model] Trainable parameters: 24,438,254
+[Model] Output classes: 14 (background, aluminum_cladding, beams_ornaments_mouldings, vinyl_trim, downpipes, hardie_pvc_trim_orange, red, mac_coil, hardie_pvc_trim_beige, hardie_pvc_trim_brown, light_pink, mac_siding, black_element, green)
+[Model] Running on: CPU
+✅ Model loaded (trained to epoch 50, val loss: 0.5947)
+[Dataset] 16 images found
+/opt/miniconda3/envs/takeoff-env/lib/python3.11/site-packages/albumentations/core/validation.py:114: UserWarning: ShiftScaleRotate is a special case of Affine transform. Please use Affine transform instead.
+  original_init(self, **validated_kwargs)
+/Users/malik/Desktop/takeoff-nn/dataset.py:86: UserWarning: Argument(s) 'var_limit' are not valid for transform GaussNoise
+  A.GaussNoise(var_limit=(5, 15), p=0.2),
+[DataLoader] Train: 12 | Val: 4
+
+── Per-class IoU ─────────────────────────────────
+  background                0.9571  ███████████████████
+  aluminum_cladding         0.0000  
+  beams_ornaments_mouldings 0.0000  
+  vinyl_trim                0.0000  
+  downpipes                 0.0000  
+  hardie_pvc_trim_orange    — (not present in dataset)
+  red                       0.0000  
+  mac_coil                  0.0000  
+  hardie_pvc_trim_beige     0.0000  
+  hardie_pvc_trim_brown     0.0000  
+  light_pink                0.0000  
+  mac_siding                — (not present in dataset)
+  black_element             0.0007  
+  green                     — (not present in dataset)
+
+  Mean IoU: 0.0871
+  → Model needs more training data or epochs.
+
+── Saving prediction visualizations ──────────────
+  Saved → /Users/malik/Desktop/takeoff-nn/outputs/predictions/prediction_001.png
+  Saved → /Users/malik/Desktop/takeoff-nn/outputs/predictions/prediction_002.png
+  Saved → /Users/malik/Desktop/takeoff-nn/outputs/predictions/prediction_003.png
+  Saved → /Users/malik/Desktop/takeoff-nn/outputs/predictions/prediction_004.png
+
+Done. Check /Users/malik/Desktop/takeoff-nn/outputs/predictions for output images.
+(takeoff-env) Maliks-MacBook-Air:takeoff-nn malik$ 

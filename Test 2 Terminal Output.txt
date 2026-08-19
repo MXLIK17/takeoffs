@@ -1,0 +1,281 @@
+Last login: Mon Aug 10 21:40:42 on ttys001
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+(base) Maliks-MacBook-Air:takeoff-nn 2 malik$ ls
+CURSOR_CONTEXT.md	data			model.py
+README.md		dataset.py		outputs.zip
+__pycache__		detect_scale_bar.py	train.py
+align_pairs.py		environment.yml
+config.py		evaluate.py
+(base) Maliks-MacBook-Air:takeoff-nn 2 malik$ conda activate takeoff-env
+(takeoff-env) Maliks-MacBook-Air:takeoff-nn 2 malik$ python dataset.py
+Testing color extraction on data/annotated/P05.jpg...
+  [data/annotated/P05.jpg] classes found: ['background', 'aluminum_cladding', 'beams_ornaments_mouldings', 'vinyl_trim', 'downpipes', 'hardie_pvc_trim_orange', 'red', 'mac_coil', 'hardie_pvc_trim_beige', 'hardie_pvc_trim_brown', 'light_pink', 'mac_siding', 'black_element', 'green']
+
+Pixel counts per class:
+  [0] background                          16,339,584 px  (97.1%)
+  [1] aluminum_cladding                       41,832 px  (0.2%)
+  [2] beams_ornaments_mouldings                  250 px  (0.0%)
+  [3] vinyl_trim                               6,259 px  (0.0%)
+  [4] downpipes                                6,287 px  (0.0%)
+  [5] hardie_pvc_trim_orange                      84 px  (0.0%)
+  [6] red                                     14,664 px  (0.1%)
+  [7] mac_coil                                   468 px  (0.0%)
+  [8] hardie_pvc_trim_beige                    2,571 px  (0.0%)
+  [9] hardie_pvc_trim_brown                   42,685 px  (0.3%)
+  [10] light_pink                               8,886 px  (0.1%)
+  [11] mac_siding                                  29 px  (0.0%)
+  [12] black_element                          366,400 px  (2.2%)
+  [13] green                                        1 px  (0.0%)
+[Dataset] 29 images found
+[DataLoader] Train: 23 | Val: 6
+
+✅ Batch loaded: images torch.Size([1, 3, 1024, 1024]) | masks torch.Size([1, 1024, 1024])
+   Classes in batch: ['background', 'aluminum_cladding', 'beams_ornaments_mouldings', 'vinyl_trim', 'mac_coil', 'hardie_pvc_trim_beige', 'hardie_pvc_trim_brown', 'light_pink', 'black_element']
+(takeoff-env) Maliks-MacBook-Air:takeoff-nn 2 malik$ python model.py
+[Model] U-Net with resnet34 encoder
+[Model] Trainable parameters: 24,438,254
+[Model] Output classes: 14 (background, aluminum_cladding, beams_ornaments_mouldings, vinyl_trim, downpipes, hardie_pvc_trim_orange, red, mac_coil, hardie_pvc_trim_beige, hardie_pvc_trim_brown, light_pink, mac_siding, black_element, green)
+[Model] Running on: CPU
+
+✅ Forward pass successful!
+   Input shape:  torch.Size([1, 3, 1024, 1024])
+   Output shape: torch.Size([1, 14, 1024, 1024])
+   Each pixel gets 14 scores, one per material class.
+
+✅ Loss function check passed! Combined loss value: 1.3124
+   (CE weight: 0.19999999999999996 | Dice weight: 0.8)
+(takeoff-env) Maliks-MacBook-Air:takeoff-nn 2 malik$ python train.py
+/opt/miniconda3/envs/takeoff-env/lib/python3.11/site-packages/albumentations/check_version.py:147: UserWarning: Error fetching version info <urlopen error _ssl.c:999: The handshake operation timed out>
+  data = fetch_version_info()
+============================================================
+  AI Takeoff — U-Net Segmentation Training
+============================================================
+[Model] U-Net with resnet34 encoder
+[Model] Trainable parameters: 24,438,254
+[Model] Output classes: 14 (background, aluminum_cladding, beams_ornaments_mouldings, vinyl_trim, downpipes, hardie_pvc_trim_orange, red, mac_coil, hardie_pvc_trim_beige, hardie_pvc_trim_brown, light_pink, mac_siding, black_element, green)
+[Model] Running on: CPU
+/opt/miniconda3/envs/takeoff-env/lib/python3.11/site-packages/torch/optim/lr_scheduler.py:28: UserWarning: The verbose parameter is deprecated. Please use get_last_lr() to access the learning rate.
+  warnings.warn("The verbose parameter is deprecated. Please use get_last_lr() "
+[Dataset] 29 images found
+[DataLoader] Train: 23 | Val: 6
+
+Starting training on CPU for up to 15 epochs
+
+Epoch 1/15
+----------------------------------------
+  Batch 10/23 | Loss: 1.0767 | IoU: 0.0223
+  Batch 20/23 | Loss: 1.0664 | IoU: 0.0318
+  Batch 23/23 | Loss: 0.7913 | IoU: 0.0389
+
+  Train → Loss: 0.9801 | IoU: 0.0258
+  Val   → Loss: 0.8893   | IoU: 0.0320
+  Time: 543.9s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 2/15
+----------------------------------------
+  Batch 10/23 | Loss: 1.0533 | IoU: 0.0426
+  Batch 20/23 | Loss: 1.0275 | IoU: 0.0513
+  Batch 23/23 | Loss: 0.8989 | IoU: 0.0503
+
+  Train → Loss: 0.9050 | IoU: 0.0454
+  Val   → Loss: 0.7789   | IoU: 0.0575
+  Time: 340.2s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 3/15
+----------------------------------------
+  Batch 10/23 | Loss: 0.8204 | IoU: 0.0574
+  Batch 20/23 | Loss: 0.8525 | IoU: 0.0591
+  Batch 23/23 | Loss: 0.7337 | IoU: 0.0604
+
+  Train → Loss: 0.8432 | IoU: 0.0572
+  Val   → Loss: 0.7383   | IoU: 0.0626
+  Time: 332.3s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 4/15
+----------------------------------------
+  Batch 10/23 | Loss: 0.8984 | IoU: 0.0624
+  Batch 20/23 | Loss: 0.3456 | IoU: 0.0790
+  Batch 23/23 | Loss: 0.7471 | IoU: 0.0738
+
+  Train → Loss: 0.7895 | IoU: 0.0672
+  Val   → Loss: 0.6973   | IoU: 0.0772
+  Time: 331.9s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 5/15
+----------------------------------------
+  Batch 10/23 | Loss: 0.8659 | IoU: 0.0740
+  Batch 20/23 | Loss: 0.7604 | IoU: 0.0691
+  Batch 23/23 | Loss: 0.5785 | IoU: 0.0781
+
+  Train → Loss: 0.7498 | IoU: 0.0733
+  Val   → Loss: 0.6685   | IoU: 0.0757
+  Time: 333.1s
+  💾 Checkpoint saved → best_model.pth
+  💾 Checkpoint saved → epoch_005.pth
+
+Epoch 6/15
+----------------------------------------
+  Batch 10/23 | Loss: 0.8640 | IoU: 0.0838
+  Batch 20/23 | Loss: 0.7182 | IoU: 0.0764
+  Batch 23/23 | Loss: 0.8425 | IoU: 0.1009
+
+  Train → Loss: 0.7118 | IoU: 0.0784
+  Val   → Loss: 0.6328   | IoU: 0.0837
+  Time: 334.0s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 7/15
+----------------------------------------
+  Batch 10/23 | Loss: 0.5415 | IoU: 0.0813
+  Batch 20/23 | Loss: 0.7873 | IoU: 0.0673
+  Batch 23/23 | Loss: 0.8114 | IoU: 0.1207
+
+  Train → Loss: 0.6779 | IoU: 0.0850
+  Val   → Loss: 0.6059   | IoU: 0.0911
+  Time: 446.2s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 8/15
+----------------------------------------
+  Batch 10/23 | Loss: 0.6517 | IoU: 0.0742
+  Batch 20/23 | Loss: 0.5095 | IoU: 0.0891
+  Batch 23/23 | Loss: 0.5613 | IoU: 0.0812
+
+  Train → Loss: 0.6560 | IoU: 0.0922
+  Val   → Loss: 0.5866   | IoU: 0.1025
+  Time: 485.3s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 9/15
+----------------------------------------
+  Batch 10/23 | Loss: 0.6523 | IoU: 0.0812
+  Batch 20/23 | Loss: 0.1968 | IoU: 0.1393
+  Batch 23/23 | Loss: 0.6574 | IoU: 0.1117
+
+  Train → Loss: 0.6359 | IoU: 0.0975
+  Val   → Loss: 0.5630   | IoU: 0.1202
+  Time: 534.9s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 10/15
+----------------------------------------
+  Batch 10/23 | Loss: 0.7420 | IoU: 0.0805
+  Batch 20/23 | Loss: 0.5195 | IoU: 0.1239
+  Batch 23/23 | Loss: 0.7482 | IoU: 0.0761
+
+  Train → Loss: 0.6170 | IoU: 0.1037
+  Val   → Loss: 0.5482   | IoU: 0.1217
+  Time: 543.7s
+  💾 Checkpoint saved → best_model.pth
+  💾 Checkpoint saved → epoch_010.pth
+
+Epoch 11/15
+----------------------------------------
+  Batch 10/23 | Loss: 0.5188 | IoU: 0.0972
+  Batch 20/23 | Loss: 0.1621 | IoU: 0.3303
+  Batch 23/23 | Loss: 0.7312 | IoU: 0.0816
+
+  Train → Loss: 0.6010 | IoU: 0.1123
+  Val   → Loss: 0.5332   | IoU: 0.1409
+  Time: 576.4s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 12/15
+----------------------------------------
+  Batch 10/23 | Loss: 0.4493 | IoU: 0.1272
+  Batch 20/23 | Loss: 0.6078 | IoU: 0.1341
+  Batch 23/23 | Loss: 0.4916 | IoU: 0.1350
+
+  Train → Loss: 0.5872 | IoU: 0.1206
+  Val   → Loss: 0.5215   | IoU: 0.1435
+  Time: 478.6s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 13/15
+----------------------------------------
+  Batch 10/23 | Loss: 0.7154 | IoU: 0.1165
+  Batch 20/23 | Loss: 0.5910 | IoU: 0.0990
+  Batch 23/23 | Loss: 0.5937 | IoU: 0.1411
+
+  Train → Loss: 0.5765 | IoU: 0.1236
+  Val   → Loss: 0.5113   | IoU: 0.1447
+  Time: 334.8s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 14/15
+----------------------------------------
+  Batch 10/23 | Loss: 0.5911 | IoU: 0.1029
+  Batch 20/23 | Loss: 0.7127 | IoU: 0.0815
+  Batch 23/23 | Loss: 0.5922 | IoU: 0.0995
+
+  Train → Loss: 0.5647 | IoU: 0.1282
+  Val   → Loss: 0.5020   | IoU: 0.1449
+  Time: 331.9s
+  💾 Checkpoint saved → best_model.pth
+
+Epoch 15/15
+----------------------------------------
+  Batch 10/23 | Loss: 0.4792 | IoU: 0.1082
+  Batch 20/23 | Loss: 0.4759 | IoU: 0.1287
+  Batch 23/23 | Loss: 0.5848 | IoU: 0.1099
+
+  Train → Loss: 0.5557 | IoU: 0.1297
+  Val   → Loss: 0.5013   | IoU: 0.1504
+  Time: 331.2s
+  💾 Checkpoint saved → best_model.pth
+  💾 Checkpoint saved → epoch_015.pth
+
+============================================================
+  Training complete!
+  Best validation loss: 0.5013
+  Best model saved at:  /Users/malik/Desktop/takeoff-nn 2/outputs/checkpoints/best_model.pth
+============================================================
+
+  Training history saved → /Users/malik/Desktop/takeoff-nn 2/outputs/logs/training_history.npy
+  Run evaluate.py to test the model on your drawings.
+(takeoff-env) Maliks-MacBook-Air:takeoff-nn 2 malik$ python evaluate.py
+Loading model from /Users/malik/Desktop/takeoff-nn 2/outputs/checkpoints/best_model.pth...
+[Model] U-Net with resnet34 encoder
+[Model] Trainable parameters: 24,438,254
+[Model] Output classes: 14 (background, aluminum_cladding, beams_ornaments_mouldings, vinyl_trim, downpipes, hardie_pvc_trim_orange, red, mac_coil, hardie_pvc_trim_beige, hardie_pvc_trim_brown, light_pink, mac_siding, black_element, green)
+[Model] Running on: CPU
+✅ Model loaded (trained to epoch 15, val loss: 0.5013)
+[Dataset] 29 images found
+[DataLoader] Train: 23 | Val: 6
+
+── Per-class IoU ─────────────────────────────────
+  background                0.9652  ███████████████████
+  aluminum_cladding         0.0000  
+  beams_ornaments_mouldings 0.0000  
+  vinyl_trim                0.0000  
+  downpipes                 0.0000  
+  hardie_pvc_trim_orange    0.0000  
+  red                       0.0000  
+  mac_coil                  0.0000  
+  hardie_pvc_trim_beige     0.0000  
+  hardie_pvc_trim_brown     0.0011  
+  light_pink                0.0000  
+  mac_siding                0.3746  ███████
+  black_element             0.0542  █
+  green                     0.0000  
+
+  Mean IoU: 0.0997
+  → Model needs more training data or epochs.
+
+── Saving prediction visualizations ──────────────
+  Saved → /Users/malik/Desktop/takeoff-nn 2/outputs/predictions/prediction_001.png
+  Saved → /Users/malik/Desktop/takeoff-nn 2/outputs/predictions/prediction_002.png
+  Saved → /Users/malik/Desktop/takeoff-nn 2/outputs/predictions/prediction_003.png
+  Saved → /Users/malik/Desktop/takeoff-nn 2/outputs/predictions/prediction_004.png
+  Saved → /Users/malik/Desktop/takeoff-nn 2/outputs/predictions/prediction_005.png
+  Saved → /Users/malik/Desktop/takeoff-nn 2/outputs/predictions/prediction_006.png
+
+Done. Check /Users/malik/Desktop/takeoff-nn 2/outputs/predictions for output images.
+(takeoff-env) Maliks-MacBook-Air:takeoff-nn 2 malik$ 
