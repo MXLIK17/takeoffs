@@ -1,3 +1,5 @@
+**Note:** Training data is proprietary and confidential to DAS10 Inc. and is not included in this repository.
+
 # Training Data — DAS10 Elevation Drawings
 
 Place matched **raw** and **annotated** image pairs here to train the segmentation model.
